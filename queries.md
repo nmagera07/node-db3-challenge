@@ -10,8 +10,8 @@ inner join categories on products.categoryId = categories.categoryId
 
 select orders.OrderID, shippers.ShipperName
 from orders
-where OrderDate < 1997-01-09
 inner join shippers on orders.ShipperID = shippers.ShipperID
+where OrderDate < "1997-01-09"
 
 ### Display all ProductNames and Quantities placed on order 10251. Sort by ProductName. Shows 3 records.
 

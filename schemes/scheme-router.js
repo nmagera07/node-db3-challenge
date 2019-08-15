@@ -2,6 +2,7 @@ const express = require('express');
 
 const Schemes = require('./scheme-model.js');
 
+
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -47,10 +48,12 @@ router.get('/:id/steps', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const schemeData = req.body;
+  
 
   try {
     const scheme = await Schemes.add(schemeData);
-    res.status(201).json(scheme);
+    const newThing = {id: scheme[0], ...schemeData }
+    res.status(201).json(newThing);
   } catch (err) {
     res.status(500).json({ message: 'Failed to create new scheme' });
   }
@@ -80,10 +83,11 @@ router.put('/:id', async (req, res) => {
 
   try {
     const scheme = await Schemes.findById(id);
-
+    
     if (scheme) {
       const updatedScheme = await Schemes.update(changes, id);
-      res.json(updatedScheme);
+      const newThing = {id: id, ...changes}
+      res.json(newThing);
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id' });
     }
